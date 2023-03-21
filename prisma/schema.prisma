@@ -16,6 +16,8 @@ model Customer {
   address   Address?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("customers")
 }
 
 model Address {
@@ -23,10 +25,13 @@ model Address {
   street    String
   city      String
   zipCode   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  country   String
   customer  Customer? @relation(fields: [customer_id], references: [id])
   customer_id String? @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("address")
 }
 
 model ApiKey {
@@ -34,4 +39,6 @@ model ApiKey {
   key       String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  @@map("apiKeys")
 }

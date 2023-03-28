@@ -6,9 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "db:dev:up": "docker compose up dev-crm-db -d",
-    "db:dev:rm": "docker compose rm dev-crm-db -s -f -v",
-    "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -25,6 +22,7 @@
   "dependencies": {
     "@google-cloud/firestore": "^6.5.0",
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "class-transformer": "^0.5.1",

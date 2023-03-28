@@ -1,36 +1,33 @@
-import { Controller, Post, Put, Get, Body, Param, Delete } from "@nestjs/common"
-import { CustomerService } from "../service/customer.service"
-import { CustomerDto } from "../dto"
+import { Controller, Post, Put, Get, Body, Param, Delete, Query } from "@nestjs/common";
+import { CustomerService } from "../service/customer.service";
+import { CustomerDto } from "../dto/customer.dto";
 
-@Controller('customer')
+@Controller('customers')
 export class CustomerController {
-    constructor(private CustomerService: CustomerService) {}
-
+    constructor(private customerService: CustomerService) {}
 
     @Post()
-    addCustomer(@Body() dto: CustomerDto) {
-        return this.CustomerService.addCustomer(dto)
+    async createCustomer(@Body() customerDto: CustomerDto) {
+        return await this.customerService.add(customerDto);
     }
 
-    @Put()
-    editCustomer(@Body() dto: CustomerDto) {
-        return this.CustomerService.editCustomer(dto)
+    @Put(':id')
+    async updateCustomer(@Param('id') id: string, @Body() customerDto: CustomerDto) {
+        return await this.customerService.edit(id, customerDto);
+    }
+
+    @Get(':id')
+    async getCustomerById(@Param('id') id: string) {
+        return await this.customerService.findOne(id);
     }
 
     @Get()
-    getCustomerById(@Param() id: string) {
-        return this.CustomerService.getCustomerById(id)
+    async getCustomersByName(@Query('name') name: string) {
+        return await this.customerService.findByName(name);
     }
 
-    @Get()
-    getCustomerByName(@Body() name: string) {
-        return this.CustomerService.getCustomersByName(name)
-    }
-
-    @Delete()
-    deleteCustomer(@Param('id') id: string) {
-        const stringId = id.toString()
-
-        return this.CustomerService.deleteCustomer(stringId)
+    @Delete(':id')
+    async deleteCustomer(@Param('id') id: string) {
+        return await this.customerService.delete(id);
     }
 }

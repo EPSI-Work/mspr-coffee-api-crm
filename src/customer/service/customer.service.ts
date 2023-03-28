@@ -5,13 +5,13 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CollectionReference, DocumentReference, QuerySnapshot } from '@google-cloud/firestore';
+import { CollectionReference, DocumentReference, QueryDocumentSnapshot, QuerySnapshot } from '@google-cloud/firestore';
 import { CustomerDocument } from '../document/customer.document';
 import { CustomerDto } from '../dto';
 
 @Injectable()
-export class HouseService {
-  private logger: Logger = new Logger(HouseService.name);
+export class CustomerService {
+  private logger: Logger = new Logger(CustomerService.name);
 
   constructor(
     @Inject(CustomerDocument.collectionName)
@@ -25,8 +25,8 @@ export class HouseService {
     return customers;
   }
 
-  async findOne(id : number): Promise<CustomerDocument> {
-    const snapshot = await this.customersCollection.doc(id.toString());
+  async findOne(id : string): Promise<CustomerDocument> {
+    const snapshot = await this.customersCollection.doc(id);
     const doc = await snapshot.get();
     if(doc.exists){
       return doc.data();
@@ -36,15 +36,24 @@ export class HouseService {
   } 
 
   async findByName(name: string): Promise<CustomerDocument> {
-    const snapshot: QuerySnapshot = await this.customersCollection
-      .where('name', '==', name)
+    const firstNameSnapshot: QuerySnapshot = await this.customersCollection
+      .where('firstName', '==', name)
       .get();
 
-    if (snapshot.empty) {
+    const lastNameSnapshot: QuerySnapshot = await this.customersCollection
+      .where('lastName', '==', name)
+      .get();
+
+    const allResults: QueryDocumentSnapshot[] = [
+      ...firstNameSnapshot.docs,
+      ...lastNameSnapshot.docs,
+    ];
+
+    if (allResults.length === 0) {
       throw new NotFoundException(`L'utilisateur ${name} n'a pas été trouvé`);
     }
 
-    const [firstResult] = snapshot.docs;
+    const [firstResult] = allResults;
     return firstResult.data() as CustomerDocument;
   }
 

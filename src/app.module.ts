@@ -11,7 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   FirestoreModule.forRoot({
     imports: [ConfigModule],
     useFactory: (configService: ConfigService) => ({
-      keyFilename: configService.get<string>('SA_KEY'),
+      keyFilename: configService.get<string>('CRM_API_KEY'),
     }),
     inject: [ConfigService],
   }),],

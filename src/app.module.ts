@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { CustomerModule } from './customer/customer.module';
 import { SecurityModule } from './security/security.module';
 import { FirestoreModule } from './firestore/firestore.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ApiKeyMiddleware } from './security/security.middleware';
 
 @Module({
   imports: [CustomerModule, SecurityModule, ConfigModule.forRoot({
@@ -11,10 +13,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   FirestoreModule.forRoot({
     imports: [ConfigModule],
     useFactory: (configService: ConfigService) => ({
-      keyFilename: configService.get<string>('CRM_API_KEY'),
+      keyFilename: configService.get<string>('FIREBASE_KEY'),
     }),
     inject: [ConfigService],
   }),],
+  providers: [{
+    provide: APP_GUARD,
+    useClass: ApiKeyMiddleware,
+  }],
 })
 
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ApiKeyMiddleware).exclude('/api-key').forRoutes('*');
+  }
+}

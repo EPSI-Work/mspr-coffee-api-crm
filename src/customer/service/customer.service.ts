@@ -15,7 +15,7 @@ export class CustomerService {
 
   constructor(
     @Inject(CustomerDocument.collectionName)
-    private customersCollection: CollectionReference<CustomerDocument>,
+    public customersCollection: CollectionReference<CustomerDocument>,
   ) {}
 
   async findAll(): Promise<CustomerDocument[]> {

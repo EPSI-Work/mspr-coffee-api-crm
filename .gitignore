@@ -35,4 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # Credentials
-/src/assets/erp.api.firestore.json
+/src/assets/credentials

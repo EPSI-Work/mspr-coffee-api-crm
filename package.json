@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "deploy:dev": "docker build -t eu.gcr.io/mspr-epsi-coffee/crm-api/crm_api:0.0.1 .",
+    "deploy:dev": "docker build -t europe-west9-docker.pkg.dev/mspr-epsi-coffee/crm-api/crm_api:0.0.3 .",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

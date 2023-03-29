@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "deploy:dev": "docker build -t nom_de_votre_image ",
+    "deploy:dev": "docker build -t eu.gcr.io/mspr-epsi-coffee/crm-api/crm_api:0.0.1 .",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@google-cloud/firestore": "^6.5.0",
+    "@jridgewell/sourcemap-codec": "^1.4.14",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",

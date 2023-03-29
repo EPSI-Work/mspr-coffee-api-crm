@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CollectionReference, DocumentReference, QueryDocumentSnapshot, QuerySnapshot } from '@google-cloud/firestore';
-import { CustomerDocument } from '../document/customer.document';
+import { CustomerDocument, CustomerType } from '../document/customer.document';
 import { CustomerDto } from '../dto';
 
 @Injectable()
@@ -70,6 +70,8 @@ export class CustomerService {
         email: customerDto.email,
         phone: customerDto.phone,
         address: customerDto.address,
+        createdAt: undefined,
+        type: CustomerType.Prospect
       };
 
       // Use set() instead of add() to define doc with a new id

@@ -1,5 +1,10 @@
 import { AddressDto } from '../dto/address.dto';
 
+export enum CustomerType {
+  Prospect = 'prospect',
+  Customer = 'customer',
+}
+
 export class CustomerDocument {
   static collectionName = 'cutomers';
 
@@ -9,5 +14,6 @@ export class CustomerDocument {
   email: string;
   phone: string;
   address: AddressDto;
+  createdAt: Date;
+  type: CustomerType;
 }
-

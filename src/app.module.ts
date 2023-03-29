@@ -1,13 +1,15 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { CustomerModule } from './customer/customer.module';
-import { SecurityModule } from './security/security.module';
-import { FirestoreModule } from './firestore/firestore.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ApiKeyMiddleware } from './security/security.middleware';
+import { OrderModule } from './order/order.module';
+import { ProductModule } from './product/product.module';
+import { SecurityModule } from './common/security/security.module';
+import { FirestoreModule } from './common/firestore/firestore.module';
+import { ApiKeyMiddleware } from './common/security/security.middleware';
 
 @Module({
-  imports: [CustomerModule, SecurityModule, ConfigModule.forRoot({
+  imports: [CustomerModule, OrderModule, ProductModule, SecurityModule, ConfigModule.forRoot({
     isGlobal: true,
   }),
   FirestoreModule.forRoot({

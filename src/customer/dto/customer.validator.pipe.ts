@@ -6,7 +6,7 @@ import { QuerySnapshot } from '@google-cloud/firestore';
 
 @Injectable()
 export class UniqueEmailValidationPipe implements PipeTransform {
-  constructor(private customerRepository: CustomerService) {}
+  constructor(private customerService: CustomerService) {}
 
   async transform(customerDto: CustomerDto): Promise<CustomerDto> {
     const errors = await validate(customerDto);
@@ -15,7 +15,7 @@ export class UniqueEmailValidationPipe implements PipeTransform {
       throw new BadRequestException(errors);
     }
 
-    const emailSnapshot: QuerySnapshot = await this.customerRepository.customersCollection
+    const emailSnapshot: QuerySnapshot = await this.customerService.customersCollection
       .where('email', '==', customerDto.email)
       .limit(1)
       .get();

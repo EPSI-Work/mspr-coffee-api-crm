@@ -1,4 +1,4 @@
-import { CustomerDocument } from "../customer/document/customer.document";
+import { CustomerDocument } from "../../customer/document/customer.document";
 
 export const FirestoreDatabaseProvider = 'firestoredb';
 export const FirestoreOptionsProvider = 'firestoreOptions'

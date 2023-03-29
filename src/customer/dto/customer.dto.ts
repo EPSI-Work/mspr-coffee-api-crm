@@ -16,4 +16,6 @@ export class CustomerDto {
   phone: string
   @IsNotEmpty()
   address: AddressDto
+  @IsNotEmpty()
+  type: string
 }

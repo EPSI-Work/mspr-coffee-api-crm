@@ -4,7 +4,7 @@ import {
   } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
   import { AxiosResponse } from 'axios';
-  import { HttpClient } from 'src/common/http-client.service';
+  import { HttpClient } from '../../common/http-client.service';
   
   @Injectable()
   export class OrderService {
